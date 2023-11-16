@@ -1,0 +1,18 @@
+spin_manifest_version = 2
+
+[application]
+name = "upload_csv"
+version = "0.1.0"
+authors = ["dodoextinct <yashkmkrishan@gmail.com>"]
+description = ""
+
+[[trigger.http]]
+route = "/..."
+component = "upload-csv"
+
+[component.upload-csv]
+source = "target/wasm32-wasi/release/upload_csv.wasm"
+allowed_outbound_hosts = []
+[component.upload-csv.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]

@@ -1,0 +1,36 @@
+spin_manifest_version = 2
+
+[application]
+name = "file_analyzer"
+version = "0.1.0"
+authors = ["dodoextinct <yashkmkrishan@gmail.com>"]
+description = ""
+
+[[trigger.http]]
+route = "/"
+component = "file-analyzer"
+
+[component.file-analyzer]
+source = "target/wasm32-wasi/release/file_analyzer.wasm"
+allowed_outbound_hosts = ["https://*:*"]
+[component.file-analyzer.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
+
+
+[[trigger.http]]
+route = "/upload"
+component = "upload"
+
+[component.upload]
+source = "/home/dodo/code/HS-RUST/hello_spin/file_analyzer/upload_csv/target/wasm32-wasi/release/upload_csv.wasm"
+
+
+[[trigger.http]]
+route = "/stream"
+component = "stream"
+
+[component.stream]
+source = "/home/dodo/code/HS-RUST/hello_spin/file_analyzer/stream_csv/target/wasm32-wasi/release/stream_csv.wasm"
+allowed_outbound_hosts = ["https://*:*"]
+

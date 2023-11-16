@@ -1,0 +1,18 @@
+spin_manifest_version = 2
+
+[application]
+name = "stream_csv"
+version = "0.1.0"
+authors = ["dodoextinct <yashkmkrishan@gmail.com>"]
+description = ""
+
+[[trigger.http]]
+route = "/..."
+component = "stream-csv"
+
+[component.stream-csv]
+source = "target/wasm32-wasi/release/stream_csv.wasm"
+allowed_outbound_hosts = ["https://*:*"]
+[component.stream-csv.build]
+command = "cargo build --target wasm32-wasi --release"
+watch = ["src/**/*.rs", "Cargo.toml"]
